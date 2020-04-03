@@ -5,6 +5,8 @@ export default class TodoRow extends Component {
     return (
       <tr>
         <td>{this.props.item.action}</td>
+        <td>{ (this.props.item.description) ? this.props.item.description :  "No description here"}
+        </td>
         <td>
           <input
             type="checkbox"

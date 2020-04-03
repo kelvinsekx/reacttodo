@@ -10,24 +10,43 @@ export default class App extends Component {
     this.state = {
       userName: "Kelvin",
       todoItems: [
-        { action: "Buy Flowers", done: false },
-        { action: "Get Shoes", done: false },
-        { action: "Collect Tickets", done: true },
-        { action: "Call Joe", done: false }
+        {
+          action: "Buy Flowers",
+          description: "Buy flowers and eat bread",
+          done: false
+        },
+        {
+          action: "Get Shoes",
+          description: "Get Shoes and arrange drink",
+          done: false
+        },
+        {
+          action: "Collect Tickets",
+          description: "Collect tickets and watch amazing movues",
+          done: true
+        },
+        {
+          action: "Call Joe",
+          description: "call joe and visit his house.",
+          done: false
+        }
       ],
       showCompleted: true
     };
   }
-  printEmpty =()=>{
-    if(this.state.todoItems.filter(item=>!item.done).length === 0){
-       return <tbody>You achieved all your tasks</tbody>    
+  printEmpty = () => {
+    if (this.state.todoItems.filter(item => !item.done).length === 0) {
+      return <tbody>You achieved all your tasks</tbody>;
     }
-  }
-  createNewTodo = task => {
+  };
+  createNewTodo = (task, description) => {
     if (!this.state.todoItems.find(item => item.action === task)) {
       this.setState(
         {
-          todoItems: [...this.state.todoItems, { action: task, done: false }]
+          todoItems: [
+            ...this.state.todoItems,
+            { action: task, description: description, done: false }
+          ]
         },
         () => localStorage.setItem("todos", JSON.stringify(this.state))
       );
@@ -62,10 +81,26 @@ export default class App extends Component {
         : {
             userName: "Kelvin",
             todoItems: [
-              { action: "Buy Flowers", done: false },
-              { action: "Get Shoes", done: false },
-              { action: "Collect Tickets", done: true },
-              { action: "Call Joe", done: false }
+              {
+                action: "Buy Flowers",
+                description: "Buy flowers and eat bread",
+                done: false
+              },
+              {
+                action: "Get Shoes",
+                description: "Get Shoes and arrange drink",
+                done: false
+              },
+              {
+                action: "Collect Tickets",
+                description: "Collect tickets and watch amazing movues",
+                done: true
+              },
+              {
+                action: "Call Joe",
+                description: "call joe and visit his house.",
+                done: false
+              }
             ],
             showCompleted: true
           }
@@ -79,13 +114,14 @@ export default class App extends Component {
         <table className="table table-striped table-bordered">
           <thead>
             <tr>
+              <th>Title</th>
               <th>Description</th>
               <th>Done</th>
             </tr>
           </thead>
           <tbody>
             {this.todoTableRows(false)}
-            { this.printEmpty() }
+            {this.printEmpty()}
           </tbody>
         </table>
         <div className="bg-secondary text-white text-center p-2">
@@ -102,10 +138,11 @@ export default class App extends Component {
         {this.state.showCompleted && (
           <table className="table table-striped table-bordered">
             <thead>
-                <tr>
-                  <th>Description</th>
-                  <th>Done</th>
-                </tr>
+              <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Done</th>
+              </tr>
             </thead>
             <tbody>{this.todoTableRows(true)}</tbody>
           </table>
